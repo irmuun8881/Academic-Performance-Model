@@ -7,7 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Load the data
-df = pd.read_csv('/Users/JessFort/Documents/My_Coding_folder/Survey/survey.csv')
+df = pd.read_csv('/Users/JessFort/Documents/My_Coding_folder/Survey/data/survey.csv')
 df = df.drop('Timestamp', axis=1)
 
 # Working with the sleep column (have a good sleeping routine or not)
