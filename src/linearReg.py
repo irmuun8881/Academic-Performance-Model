@@ -4,19 +4,22 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 import seaborn as sns
+from sklearn.preprocessing import StandardScaler
+
 import matplotlib.pyplot as plt
 
 # Load and preprocess the data
 df = pd.read_csv('/Users/JessFort/Documents/My_Coding_folder/Survey/data/survey.csv')
 df.drop('Timestamp', axis=1, inplace=True)
+df.drop('major',axis=1,inplace=True)
 df['sleep'] = [4 if answer[0] != '3' else 10 for answer in df['sleep']]
 df['work'] = df['work'].apply(lambda x: 0 if x.startswith('1') else 4 if x.startswith('2') else 6 if x.startswith('3') else 10)
 df['socialMedia'] = df['socialMedia'].apply(lambda x: 0 if x <= 1 else 4 if x == 2 else 6 if x == 3 else 10)
 df = df.astype(float)
 
 # Identify outliers
-condition_1 = (df['sleep'] == 10) & ((df['work'] == 0) | (df['work'] == 4)) & ((df['socialMedia'] == 0) | (df['socialMedia'] == 3)) & (df['major'] > df['major'].mean())
-condition_2 = (df['sleep'] == 4) & ((df['work'] == 6) | (df['work'] == 10)) & ((df['socialMedia'] == 6) | (df['socialMedia'] == 10)) & (df['major'] < df['major'].mean())
+condition_1 = (df['sleep'] == 10) & ((df['work'] == 0) | (df['work'] == 4)) & ((df['socialMedia'] == 0) | (df['socialMedia'] == 3))
+condition_2 = (df['sleep'] == 4) & ((df['work'] == 6) | (df['work'] == 10)) & ((df['socialMedia'] == 6) | (df['socialMedia'] == 10))
 outliers = df[(condition_1) | (condition_2)].index
 
 df.drop(outliers, inplace=True)
@@ -26,10 +29,17 @@ X = df.drop('grades', axis=1).values
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=40)
 
-# Train and evaluate the model
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train the model on scaled data
 model = LinearRegression()
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test).round()
+model.fit(X_train_scaled, y_train)
+
+# Make predictions on the scaled test set
+y_pred = model.predict(X_test_scaled).round()
+
 mse = mean_squared_error(y_test, y_pred)
 std_dev = np.std(y_test)
 print(f"Sample size after preprocessing: {len(y)}")
