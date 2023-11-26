@@ -1,24 +1,31 @@
-# Correlation between Habits and Academic Satisfaction Survey
+
+# Academic Performance Satisfaction Analysis
 
 ## Overview
+This project aims to identify factors that impact students' satisfaction with their academic performance. Recognizing that direct queries about GPA could affect the candidness of responses, we used a satisfaction score as a proxy measure for academic performance.
 
-This repository contains an analysis script focusing on exploring the potential correlation between daily habits and the academic satisfaction of college students. The analysis uses Python with libraries like Pandas, NumPy, Scikit-learn, Seaborn, and Matplotlib to investigate relationships within the provided survey data.
+## Data Exploration
+Initial exploration with histograms and boxplots provided insights into the distribution and spread of variables like 'Social Media Usage', 'Major Satisfaction', and 'Grades'. A correlation matrix heatmap was used to discern potential relationships between variables.
 
-## Purpose
+![Histograms](histogram.png)
+![Boxplots](boxplot.png)
+![Heatmap](heatmap.png)
 
-The primary objective of this analysis is to uncover potential connections between various daily habits, routines, and the overall satisfaction levels of college students concerning their academic performance. By examining different factors like wake-up times, part-time employment, social media usage, major satisfaction, and perceived academic performance satisfaction, we aim to identify any correlations that might exist.
+## Outlier Detection
+An initial attempt at automatic outlier detection removed a significant portion of the data, which was deemed too aggressive. A manual approach was taken, leading to the removal of 2 outliers for a more balanced dataset.
 
-## Analysis Workflow
+## Model Selection and Evaluation
+Linear Regression emerged as the most accurate model, providing a mean squared error of approximately 1.4. The model's effectiveness suggests that it can reliably predict academic performance satisfaction from the given features.
 
-The analysis script performs the following tasks:
+## Feature Impact
+The analysis demonstrated that the 'sleep' variable was the most impactful on grades, which is supported by the model's weights and confirmed by the heatmap illustration.
 
-- Cleans the survey data by categorizing and processing responses related to sleep patterns, work schedules, social media usage, and academic performance.
-- Identifies outliers based on predefined thresholds and removes them from the dataset.
-- Utilizes linear regression to model the relationship between various habits and academic satisfaction.
-- Evaluates the model's performance using Mean Squared Error (MSE) and compares predictions against actual academic performance.
+![Feature Impact](plot0.35.png)
 
-## Getting Started
+## Conclusion
+Despite the small sample size, the analysis successfully extracted meaningful insights, highlighting the significant influence of sleep patterns on academic satisfaction. This underscores the need to consider lifestyle factors in educational outcomes.
 
+---
 ### Requirements
 
 - Python 3.6 or higher
