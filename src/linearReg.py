@@ -11,15 +11,14 @@ import matplotlib.pyplot as plt
 # Load and preprocess the data
 df = pd.read_csv('/Users/JessFort/Documents/My_Coding_folder/Survey/data/survey.csv')
 df.drop('Timestamp', axis=1, inplace=True)
-df.drop('major',axis=1,inplace=True)
 df['sleep'] = [4 if answer[0] != '3' else 10 for answer in df['sleep']]
 df['work'] = df['work'].apply(lambda x: 0 if x.startswith('1') else 4 if x.startswith('2') else 6 if x.startswith('3') else 10)
 df['socialMedia'] = df['socialMedia'].apply(lambda x: 0 if x <= 1 else 4 if x == 2 else 6 if x == 3 else 10)
 df = df.astype(float)
 
 # Identify outliers
-condition_1 = (df['sleep'] == 10) & ((df['work'] == 0) | (df['work'] == 4)) & ((df['socialMedia'] == 0) | (df['socialMedia'] == 3))
-condition_2 = (df['sleep'] == 4) & ((df['work'] == 6) | (df['work'] == 10)) & ((df['socialMedia'] == 6) | (df['socialMedia'] == 10))
+condition_1 = (df['sleep'] == 10) & ((df['work'] == 0) | (df['work'] == 4)) & ((df['socialMedia'] == 0) | (df['socialMedia'] == 3)) & (df['major'] > df['major'].mean())
+condition_2 = (df['sleep'] == 4) & ((df['work'] == 6) | (df['work'] == 10)) & ((df['socialMedia'] == 6) | (df['socialMedia'] == 10)) & (df['major'] < df['major'].mean())
 outliers = df[(condition_1) | (condition_2)].index
 
 df.drop(outliers, inplace=True)
@@ -27,7 +26,7 @@ y = df['grades'].values
 X = df.drop('grades', axis=1).values
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.35, random_state=40)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=40)
 
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)

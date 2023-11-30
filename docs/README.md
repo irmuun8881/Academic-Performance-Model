@@ -7,10 +7,6 @@ This project aims to identify factors that impact students' satisfaction with th
 ## Data Exploration
 Initial exploration with histograms and boxplots provided insights into the distribution and spread of variables like 'Social Media Usage', 'Major Satisfaction', and 'Grades'. A correlation matrix heatmap was used to discern potential relationships between variables.
 
-![Histograms](histogram.png)
-![Boxplots](boxplot.png)
-![Heatmap](heatmap.png)
-
 ## Outlier Detection
 An initial attempt at automatic outlier detection removed a significant portion of the data, which was deemed too aggressive. A manual approach was taken, leading to the removal of 2 outliers for a more balanced dataset.
 
