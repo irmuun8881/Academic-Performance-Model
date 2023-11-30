@@ -31,6 +31,6 @@ Despite the small sample size, the analysis successfully extracted meaningful in
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your_username/your_repository.git
+   git clone https://github.com/irmuun8881/Academic-Performance-Model/.git
    cd your_repository
    pip install -r requirements.txt
